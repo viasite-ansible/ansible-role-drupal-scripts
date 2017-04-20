@@ -1,0 +1,8 @@
+---
+drupal_scripts_version: master
+drupal_scripts_install_path: /usr/share/drupal-scripts
+drupal_scripts_modules_cache_time: 10
+
+drupal_scripts_docs_file: /dev/null
+drupal_scripts_users_list_file: /dev/null
+drupal_scripts_users_default_role: administrator

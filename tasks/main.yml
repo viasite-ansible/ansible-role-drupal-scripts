@@ -1,0 +1,49 @@
+---
+
+- name: Ensure cron and git installed
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - cron
+    - git
+  tags: [ drupal-scripts, install ]
+
+- name: Sync drupal-scripts
+  git:
+    repo: https://github.com/viasite/drupal-scripts.git
+    version: "{{ drupal_scripts_version }}"
+    dest: "{{ drupal_scripts_install_path }}"
+    force: yes
+  register: register_drupal_scripts_sync
+  tags: [ drupal-scripts, install, upgrade ]
+
+- name: Create executable links
+  command: find "{{ drupal_scripts_install_path }}/bin" -type f -exec ln -s {} /usr/local/bin \;
+  when: register_drupal_scripts_sync|changed
+  tags: [ drupal-scripts, install, upgrade, skip_ansible_lint ]
+
+- name: drupal-scripts config
+  template:
+    src: drupal-scripts.conf.j2
+    dest: /etc/drupal-scripts.conf
+    owner: root
+    group: root
+    mode: 0644
+  tags: [ drupal-scripts, install, configure ]
+
+- name: Configuring cron tasks
+  cron:
+    cron_file: "{{ item.cron_file | default(omit) }}"
+    day: "{{ item.day | default(omit) }}"
+    hour: "{{ item.hour | default(omit) }}"
+    job: "{{ item.job | default(omit) }}"
+    minute: "{{ item.minute | default(omit) }}"
+    month: "{{ item.month | default(omit) }}"
+    name: "{{ item.name | default(item) }}"
+    special_time: "{{ item.special_time | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+    user: "{{ item.user | default(omit) }}"
+    weekday: "{{ item.weekday | default(omit) }}"
+  with_items: "{{ drupal_scripts_cron_tasks }}"
+  tags: [ drupal-scripts, install, configure, cron ]

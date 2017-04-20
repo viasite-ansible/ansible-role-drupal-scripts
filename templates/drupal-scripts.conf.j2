@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+# scripts directory
+DRUPAL_SCRIPTS_ROOT="{{ drupal_scripts_install_path }}"
+
+# drs module-doc
+DOCS_FILE="{{ drupal_scripts_docs_file }}"
+
+# drs modules-enabled, cache in minutes
+MODULES_CACHE_TIME={{ drupal_scripts_modules_cache_time }}
+
+# drs add-users
+USERS_LIST_FILE="{{ drupal_scripts_users_list_file }}"
+USERS_DEFAULT_ROLE="{{ drupal_scripts_users_default_role }}"
