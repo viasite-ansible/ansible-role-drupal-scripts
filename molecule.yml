@@ -11,3 +11,9 @@ docker:
 
 ansible:
   playbook: tests/playbook.yml
+  group_vars:
+    all:
+      drupal_scripts_users:
+        - email: user1@example.com
+        - email: user2@example.com
+          role: otherrole

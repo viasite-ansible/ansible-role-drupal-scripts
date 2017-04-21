@@ -4,5 +4,9 @@ drupal_scripts_install_path: /usr/share/drupal-scripts
 drupal_scripts_modules_cache_time: 10
 
 drupal_scripts_docs_file: /dev/null
-drupal_scripts_users_list_file: /dev/null
+drupal_scripts_users_list_file: /etc/drupal-scripts-users.conf
 drupal_scripts_users_default_role: administrator
+
+drupal_scripts_users: []
+#  - email: mail@example.com
+#    role: administrator
