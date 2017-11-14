@@ -1,0 +1,23 @@
+---
+driver:
+  name: docker
+platforms:
+  - name: ansible-role-drupal-scripts-1604
+    image: ubuntu
+    image_version: 16.04
+    volume_mounts:
+      - ${MOLECULE_APTPROXY_PATH}:/etc/apt/apt.conf.d/00aptproxy
+
+lint:
+  name: yamllint
+  enabled: False
+
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        drupal_scripts_users:
+          - email: user1@example.com
+          - email: user2@example.com
+            role: otherrole
